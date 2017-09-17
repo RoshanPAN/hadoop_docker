@@ -18,6 +18,9 @@ RUN yum update -y libselinux
 RUN ssh-keygen -q -N "" -t dsa -f /etc/ssh/ssh_host_dsa_key
 RUN ssh-keygen -q -N "" -t rsa -f /etc/ssh/ssh_host_rsa_key
 RUN ssh-keygen -q -N "" -t rsa -f /root/.ssh/id_rsa
+# The authorized_keys file in SSH specifies the SSH keys that can be used
+# for logging into the user account for which the file is configured.
+# Allow itself to connect to itself (still need to add pub key of other server)
 RUN cp /root/.ssh/id_rsa.pub /root/.ssh/authorized_keys
 
 
@@ -98,7 +101,7 @@ RUN echo "Port 2122" >> /etc/ssh/sshd_config
 RUN service sshd start && $HADOOP_PREFIX/etc/hadoop/hadoop-env.sh && $HADOOP_PREFIX/sbin/start-dfs.sh && $HADOOP_PREFIX/bin/hdfs dfs -mkdir -p /user/root
 RUN service sshd start && $HADOOP_PREFIX/etc/hadoop/hadoop-env.sh && $HADOOP_PREFIX/sbin/start-dfs.sh && $HADOOP_PREFIX/bin/hdfs dfs -put $HADOOP_PREFIX/etc/hadoop/ input
 
-CMD ["/etc/bootstrap.sh", "-d"]
+CMD ["/etc/bootstrap.sh", "-d"] # Run this inside container
 
 # Hdfs ports
 EXPOSE 50010 50020 50070 50075 50090 8020 9000
@@ -106,5 +109,5 @@ EXPOSE 50010 50020 50070 50075 50090 8020 9000
 EXPOSE 10020 19888
 #Yarn ports
 EXPOSE 8030 8031 8032 8033 8040 8042 8088
-#Other ports
+#Other ports (2122=sshd)
 EXPOSE 49707 2122
