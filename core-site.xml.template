@@ -1,6 +1,14 @@
-  <configuration>
+<configuration>
       <property>
-          <name>fs.defaultFS</name>
-          <value>hdfs://HOSTNAME:9000</value>
+        <name>fs.defaultFS</name>
+        <value>hdfs://machine01:9000</value>
       </property>
-  </configuration>
+      <property>
+        <name>hadoop.tmp.dir</name>
+        <value>/usr/local/hadoop/tmp</value>
+      </property>
+      <property>
+        <name>fs.trash.interval</name>
+        <value>1440</value>
+      </property>
+</configuration>
