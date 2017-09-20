@@ -2,6 +2,11 @@
 
 : ${HADOOP_PREFIX:=/usr/local/hadoop}
 
+# Add IP-Host mapping into /etc/Hosts
+echo "164.107.119.20      machine01" >> /etc/hosts
+echo "164.107.119.21      machine02" >> /etc/hosts
+echo "164.107.119.22      machine03" >> /etc/hosts
+
 $HADOOP_PREFIX/etc/hadoop/hadoop-env.sh
 
 rm /tmp/*.pid

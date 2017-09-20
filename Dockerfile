@@ -113,9 +113,9 @@ RUN service sshd start && $HADOOP_PREFIX/etc/hadoop/hadoop-env.sh && $HADOOP_PRE
 # echo "164.107.119.20      machine01" >> /etc/hosts
 # echo "164.107.119.21      machine02" >> /etc/hosts
 # echo "164.107.119.22      machine03" >> /etc/hosts
-RUN echo "164.107.119.20      machine01" >> /etc/hosts
-RUN echo "164.107.119.21      machine02" >> /etc/hosts
-RUN echo "164.107.119.22      machine03" >> /etc/hosts
+# RUN echo "164.107.119.20      machine01" >> /etc/hosts
+# RUN echo "164.107.119.21      machine02" >> /etc/hosts
+# RUN echo "164.107.119.22      machine03" >> /etc/hosts
 
 CMD ["/etc/bootstrap.sh", "-d"] # Run this inside container
 
