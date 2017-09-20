@@ -43,7 +43,11 @@ RUN mkdir -p /tmp/native
 RUN curl -L https://github.com/sequenceiq/docker-hadoop-build/releases/download/v2.7.1/hadoop-native-64-2.7.1.tgz | tar -xz -C /tmp/native
 ###
 # hadoop
+<<<<<<< HEAD
 RUN curl -s http://ftp.wayne.edu/apache/hadoop/common/hadoop-2.7.4/hadoop-2.7.4.tar.gz | tar -xz -C /usr/local/
+=======
+RUN curl -LO http://ftp.wayne.edu/apache/hadoop/common/hadoop-2.7.4/hadoop-2.7.4.tar.gz | tar -xz -C /usr/local/
+>>>>>>> e83853f5002d7f8d1c17f16987ac57135088dde4
 RUN cd /usr/local && ln -s ./hadoop-2.7.4 hadoop
 
 ENV HADOOP_PREFIX /usr/local/hadoop
