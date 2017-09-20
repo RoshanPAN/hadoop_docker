@@ -1,4 +1,4 @@
-# Creates pseudo distributed hadoop 2.7.1
+# Creates pseudo distributed hadoop 2.7.4
 #
 # docker build -t sequenceiq/hadoop .
 ###
@@ -61,15 +61,6 @@ RUN sed -i '/^export HADOOP_CONF_DIR/ s:.*:export HADOOP_CONF_DIR=/usr/local/had
 RUN mkdir $HADOOP_PREFIX/input
 RUN cp $HADOOP_PREFIX/etc/hadoop/*.xml $HADOOP_PREFIX/input
 
-###
-# modify the /etc/hosts file for ip hostname mapping
-# echo "164.107.119.20      machine01" >> /etc/hosts
-# echo "164.107.119.21      machine02" >> /etc/hosts
-# echo "164.107.119.22      machine03" >> /etc/hosts
-RUN echo "164.107.119.20      machine01" >> /etc/hosts
-RUN echo "164.107.119.21      machine02" >> /etc/hosts
-RUN echo "164.107.119.22      machine03" >> /etc/hosts
-
 #### TODO modify the config file of hadoop, all machine have same config file
 # distributed on a 3 machine cluster
 ADD core-site.xml.template $HADOOP_PREFIX/etc/hadoop/core-site.xml.template
@@ -97,11 +88,11 @@ RUN chown root:root /root/.ssh/config
 # ADD supervisord.conf /etc/supervisord.conf
 
 #### TODO Add it back 
-# ADD bootstrap.sh /etc/bootstrap.sh
-# RUN chown root:root /etc/bootstrap.sh
-# RUN chmod 700 /etc/bootstrap.sh
+ADD bootstrap.sh /etc/bootstrap.sh
+RUN chown root:root /etc/bootstrap.sh
+RUN chmod 700 /etc/bootstrap.sh
 #### TODO Add it back 
-# ENV BOOTSTRAP /etc/bootstrap.sh
+ENV BOOTSTRAP /etc/bootstrap.sh
 ###
 # workingaround docker.io build error
 RUN ls -la /usr/local/hadoop/etc/hadoop/*-env.sh
@@ -115,6 +106,16 @@ RUN echo "Port 2122" >> /etc/ssh/sshd_config
 
 RUN service sshd start && $HADOOP_PREFIX/etc/hadoop/hadoop-env.sh && $HADOOP_PREFIX/sbin/start-dfs.sh && $HADOOP_PREFIX/bin/hdfs dfs -mkdir -p /user/root
 RUN service sshd start && $HADOOP_PREFIX/etc/hadoop/hadoop-env.sh && $HADOOP_PREFIX/sbin/start-dfs.sh && $HADOOP_PREFIX/bin/hdfs dfs -put $HADOOP_PREFIX/etc/hadoop/ input
+
+
+###
+# modify the /etc/hosts file for ip hostname mapping
+# echo "164.107.119.20      machine01" >> /etc/hosts
+# echo "164.107.119.21      machine02" >> /etc/hosts
+# echo "164.107.119.22      machine03" >> /etc/hosts
+RUN echo "164.107.119.20      machine01" >> /etc/hosts
+RUN echo "164.107.119.21      machine02" >> /etc/hosts
+RUN echo "164.107.119.22      machine03" >> /etc/hosts
 
 CMD ["/etc/bootstrap.sh", "-d"] # Run this inside container
 
