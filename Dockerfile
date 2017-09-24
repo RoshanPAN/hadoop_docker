@@ -101,7 +101,7 @@ RUN chmod +x /usr/local/hadoop/etc/hadoop/*-env.sh
 RUN ls -la /usr/local/hadoop/etc/hadoop/*-env.sh
 
 # Create this folder if not exists
-RUN ! [ -d $HADOOP_PREFIX/tmp/name ] && mkdir $HADOOP_PREFIX/tmp/name
+RUN mkdir -p $HADOOP_PREFIX/tmp/name
 
 ###
 # fix the 254 error code
@@ -122,7 +122,6 @@ RUN service sshd start && $HADOOP_PREFIX/etc/hadoop/hadoop-env.sh && $HADOOP_PRE
 # RUN echo "164.107.119.21      machine02" >> /etc/hosts
 # RUN echo "164.107.119.22      machine03" >> /etc/hosts
 
-CMD ["/etc/bootstrap.sh", "-d"] # Run this inside container
 
 # HDFS Web UIs
 # Namenode, dfs.http.address
@@ -153,5 +152,4 @@ EXPOSE 50100
 # ssh
 EXPOSE 2122
 
-# # Hdfs ports
-# EXPOSE 50010 50020 50070 50075 50090 8020 9000
+CMD ["/etc/bootstrap.sh", "-d"] # Run this inside container
