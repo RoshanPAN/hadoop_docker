@@ -1,3 +1,5 @@
+# Run this Script in the folder contains docker file
+
 # Allow ports in firewall
 # Hdfs ports
 ufw allow 50010 && ufw allow 50020 && ufw allow 50075 && ufw allow 50070 && ufw allow 50090 \
@@ -12,7 +14,12 @@ ufw allow 49707 && ufw allow 2122
 
 
 # Build Docker Image
-docker build -t="pls331/centos:psuedo-distributed" .
+docker build -t="pls331/centos:distributed" .
 
 # Create Contrainer from Image
-docker run -it -p 50010:50010 -p 2122:2122 -p 50070:50070 pls331/centos:psuedo-distributed /etc/bootstrap.sh -bash
+docker run -it --net=host pls331/centos:distributed \
+  -p 50070:50070 -p 50075:50075 -p 50090:50090 -p 50105:50105 \
+  -p 50030:50030 -p 50060:50060 -p 8020:8020 -p 50010:50010 \
+  -p 50020:50020 -p 50100:50100 \
+  -p 2122:2122 \
+  pls331/centos:psuedo-distributed /etc/bootstrap.sh -bash

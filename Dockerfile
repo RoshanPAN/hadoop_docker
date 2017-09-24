@@ -3,7 +3,6 @@
 # docker build -t sequenceiq/hadoop .
 ###
 FROM sequenceiq/pam:centos-6.5
-ARG cur_hostname
 MAINTAINER LuoshangPan
 
 USER root
@@ -71,9 +70,11 @@ ADD yarn-site.xml $HADOOP_PREFIX/etc/hadoop/yarn-site.xml
 
 RUN $HADOOP_PREFIX/bin/hdfs namenode -format
 ###
-# fixing the libhadoop.so like a boss
+# fixing the libhadoop.so like a boss 
+# TODO: it seems this 2.7.1 native-lib does not work for 2.7.4
 RUN rm -rf /usr/local/hadoop/lib/native
 RUN mv /tmp/native /usr/local/hadoop/lib
+
 ###
 ADD ssh_config /root/.ssh/config 
 RUN chmod 600 /root/.ssh/config 
@@ -98,6 +99,10 @@ ENV BOOTSTRAP /etc/bootstrap.sh
 RUN ls -la /usr/local/hadoop/etc/hadoop/*-env.sh
 RUN chmod +x /usr/local/hadoop/etc/hadoop/*-env.sh
 RUN ls -la /usr/local/hadoop/etc/hadoop/*-env.sh
+
+# Create this folder if not exists
+RUN ! [ -d $HADOOP_PREFIX/tmp/name ] && mkdir $HADOOP_PREFIX/tmp/name
+
 ###
 # fix the 254 error code
 RUN sed  -i "/^[^#]*UsePAM/ s/.*/#&/"  /etc/ssh/sshd_config
@@ -119,12 +124,34 @@ RUN service sshd start && $HADOOP_PREFIX/etc/hadoop/hadoop-env.sh && $HADOOP_PRE
 
 CMD ["/etc/bootstrap.sh", "-d"] # Run this inside container
 
+# HDFS Web UIs
+# Namenode, dfs.http.address
+EXPOSE 50070
+# Datanodes, dfs.datanode.http.address
+EXPOSE 50075
+# Secondarynamenode, dfs.secondary.http.address
+EXPOSE 50090
+# Backup/Checkpoint node, dfs.backup.http.address
+EXPOSE 50105
 
-# Hdfs ports
-EXPOSE 50010 50020 50070 50075 50090 8020 9000
-# Mapred ports
-EXPOSE 10020 19888
-#Yarn ports
-EXPOSE 8030 8031 8032 8033 8040 8042 8088
-#Other ports (2122=sshd)
-EXPOSE 49707 2122
+# MR Web UIs
+# Jobracker, mapred.job.tracker.http.address
+EXPOSE 50030
+# Tasktrackers, mapred.task.tracker.http.address
+EXPOSE 50060
+
+# HDFS Daemons
+# Namenode	fs.defaultFS.	IPC: ClientProtocol	 Filesystem metadata operations
+EXPOSE 8020
+# Datanode dfs.datanode.address	Custom Hadoop Xceiver: DataNode and DFSClient	DFS data transfer
+EXPOSE 50010
+# Datanode dfs.datanode.ipc.address	IPC: InterDatanodeProtocol, ClientDatanodeProtocol ClientProtocol	Block metadata operations and recovery
+EXPOSE 50020
+# Backupnode dfs.backup.address	Same as namenode	HDFS Metadata Operations 
+EXPOSE 50100
+
+# ssh
+EXPOSE 2122
+
+# # Hdfs ports
+# EXPOSE 50010 50020 50070 50075 50090 8020 9000
