@@ -17,11 +17,14 @@ cd $HADOOP_PREFIX/share/hadoop/common ; for cp in ${ACP//,/ }; do  echo == $cp; 
 # altering the core-site configuration
 sed s/HOSTNAME/$HOSTNAME/ /usr/local/hadoop/etc/hadoop/core-site.xml.template > /usr/local/hadoop/etc/hadoop/core-site.xml
 
+# create $HADOOP_PREFIX/tmp/dfs/name folder if not exists
+mkdir -p $HADOOP_PREFIX/tmp/dfs/name
 
 service sshd start
 $HADOOP_PREFIX/sbin/start-dfs.sh
 $HADOOP_PREFIX/sbin/start-yarn.sh
 $HADOOP_PREFIX/sbin/mr-jobhistory-daemon.sh start historyserver
+
 
 if [[ $1 == "-d" ]]; then
   while true; do sleep 1000; done
