@@ -1,3 +1,5 @@
+
+
 # Creates pseudo distributed hadoop 2.7.4
 #
 # docker build -t sequenceiq/hadoop .

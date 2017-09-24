@@ -20,6 +20,9 @@ sed s/HOSTNAME/$HOSTNAME/ /usr/local/hadoop/etc/hadoop/core-site.xml.template > 
 # create $HADOOP_PREFIX/tmp/dfs/name folder if not exists
 mkdir -p $HADOOP_PREFIX/tmp/dfs/name
 
+# format namenode during run time
+$HADOOP_PREFIX/bin/hdfs namenode -format
+
 service sshd start
 $HADOOP_PREFIX/sbin/start-dfs.sh
 $HADOOP_PREFIX/sbin/start-yarn.sh

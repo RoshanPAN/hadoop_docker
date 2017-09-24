@@ -1,16 +1,35 @@
 # Run this Script in the folder contains docker file
 
 # Allow ports in firewall
-# Hdfs ports
-ufw allow 50010 && ufw allow 50020 && ufw allow 50075 && ufw allow 50070 && ufw allow 50090 \
-  && ufw allow 8020 && ufw allow 9000 
-# Mapred ports
-ufw allow 10020 && ufw allow 19888
-# Yarn ports
-ufw allow 8030 && ufw allow 8031 && ufw allow 8033 && ufw allow 8040 \
-  && ufw allow 8042 && ufw allow 8088 
-# 2122 = sshd, 
-ufw allow 49707 && ufw allow 2122
+
+# HDFS Web UIs
+# Namenode, dfs.http.address
+ufw allow 50070
+# Datanodes, dfs.datanode.http.address
+ufw allow 50075
+# Secondarynamenode, dfs.secondary.http.address
+ufw allow 50090
+# Backup/Checkpoint node, dfs.backup.http.address
+ufw allow 50105
+
+# MR Web UIs
+# Jobracker, mapred.job.tracker.http.address
+ufw allow 50030
+# Tasktrackers, mapred.task.tracker.http.address
+ufw allow 50060
+
+# HDFS Daemons
+# Namenode	fs.defaultFS.	IPC: ClientProtocol	 Filesystem metadata operations
+ufw allow 8020
+# Datanode dfs.datanode.address	Custom Hadoop Xceiver: DataNode and DFSClient	DFS data transfer
+ufw allow 50010
+# Datanode dfs.datanode.ipc.address	IPC: InterDatanodeProtocol, ClientDatanodeProtocol ClientProtocol	Block metadata operations and recovery
+ufw allow 50020
+# Backupnode dfs.backup.address	Same as namenode	HDFS Metadata Operations 
+ufw allow 50100
+
+# ssh
+ufw allow 2122
 
 
 # Build Docker Image && Create Contrainer from Image
