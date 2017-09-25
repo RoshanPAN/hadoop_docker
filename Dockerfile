@@ -17,15 +17,20 @@ RUN yum clean all; \
 RUN yum update -y libselinux
 ###
 # passwordless ssh
-RUN ssh-keygen -q -N "" -t dsa -f /etc/ssh/ssh_host_dsa_key
-RUN ssh-keygen -q -N "" -t rsa -f /etc/ssh/ssh_host_rsa_key
-RUN ssh-keygen -q -N "" -t rsa -f /root/.ssh/id_rsa
+# RUN ssh-keygen -q -N "" -t dsa -f /etc/ssh/ssh_host_dsa_key
+# RUN ssh-keygen -q -N "" -t rsa -f /etc/ssh/ssh_host_rsa_key
+# RUN ssh-keygen -q -N "" -t rsa -f /root/.ssh/id_rsa
 # The authorized_keys file in SSH specifies the SSH keys that can be used
 # for logging into the user account for which the file is configured.
 # Allow itself to connect to itself (still need to add pub key of other server)
 # All container will have the same private and public key, so they could connect
 # to each other in this way 
 RUN cp /root/.ssh/id_rsa.pub /root/.ssh/authorized_keys
+# Use the host machine's ssh for container (so that all of them can communicate)
+ADD ~/.ssh/authorized_keys /root/.ssh/authorized_keys
+ADD ~/.ssh/id_rsa /root/.ssh/id_rsa
+ADD ~/.ssh/id_rsa.pub /root/.ssh/id_rsa.pub
+ADD ~/.ssh/known_hosts /root/.ssh/known_hosts
 
 ###
 # java
@@ -62,13 +67,14 @@ RUN sed -i '/^export HADOOP_CONF_DIR/ s:.*:export HADOOP_CONF_DIR=/usr/local/had
 RUN mkdir $HADOOP_PREFIX/input
 RUN cp $HADOOP_PREFIX/etc/hadoop/*.xml $HADOOP_PREFIX/input
 
-#### TODO modify the config file of hadoop, all machine have same config file
 # distributed on a 3 machine cluster
-ADD core-site.xml.template $HADOOP_PREFIX/etc/hadoop/core-site.xml.template
+ADD core-site.xml.template $HADOOP_PREFIX/etc/hadoop/core-site.xml
 ADD hdfs-site.xml $HADOOP_PREFIX/etc/hadoop/hdfs-site.xml
+ADD slaves $HADOOP_PREFIX/etc/hadoop/slaves
 
 ADD mapred-site.xml $HADOOP_PREFIX/etc/hadoop/mapred-site.xml
 ADD yarn-site.xml $HADOOP_PREFIX/etc/hadoop/yarn-site.xml
+
 
 RUN $HADOOP_PREFIX/bin/hdfs namenode -format
 ###

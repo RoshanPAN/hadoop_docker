@@ -15,7 +15,7 @@ rm /tmp/*.pid
 cd $HADOOP_PREFIX/share/hadoop/common ; for cp in ${ACP//,/ }; do  echo == $cp; curl -LO $cp ; done; cd -
 
 # altering the core-site configuration
-sed s/HOSTNAME/$HOSTNAME/ /usr/local/hadoop/etc/hadoop/core-site.xml.template > /usr/local/hadoop/etc/hadoop/core-site.xml
+# sed s/HOSTNAME/$HOSTNAME/ /usr/local/hadoop/etc/hadoop/core-site.xml.template > /usr/local/hadoop/etc/hadoop/core-site.xml
 
 # create $HADOOP_PREFIX/tmp/dfs/name folder if not exists
 mkdir -p $HADOOP_PREFIX/tmp/dfs/name

@@ -1,7 +1,6 @@
 # Run this Script in the folder contains docker file
 
 # Allow ports in firewall
-
 # HDFS Web UIs
 # Namenode, dfs.http.address
 ufw allow 50070
@@ -30,7 +29,6 @@ ufw allow 50100
 
 # ssh
 ufw allow 2122
-
 
 # Build Docker Image && Create Contrainer from Image
 docker build -t="pls331/centos:distributed" .

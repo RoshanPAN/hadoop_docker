@@ -33,5 +33,11 @@
       <name>yarn.log-aggregation-enable</name>
       <value>true</value>
     </property>
+    
+    <property>
+      <description>The hostname of the RM.</description>
+      <name>yarn.resourcemanager.hostname</name>
+      <value>machine01</value>
+    </property>
 
 </configuration>
