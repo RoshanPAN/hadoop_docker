@@ -25,7 +25,7 @@ RUN yum update -y libselinux
 # Allow itself to connect to itself (still need to add pub key of other server)
 # All container will have the same private and public key, so they could connect
 # to each other in this way 
-RUN cp /root/.ssh/id_rsa.pub /root/.ssh/authorized_keys
+# RUN cp /root/.ssh/id_rsa.pub /root/.ssh/authorized_keys
 # Use the host machine's ssh for container (so that all of them can communicate)
 ADD ~/.ssh/authorized_keys /root/.ssh/authorized_keys
 ADD ~/.ssh/id_rsa /root/.ssh/id_rsa
