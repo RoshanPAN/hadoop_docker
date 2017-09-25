@@ -1,4 +1,5 @@
 # Run this Script in the folder contains docker file
+# Make sure 
 
 # Allow ports in firewall
 # HDFS Web UIs
@@ -29,6 +30,12 @@ ufw allow 50100
 
 # ssh
 ufw allow 2122
+
+# Copy ssh keys into the context of the build
+cp ~/.ssh/id_rsa .
+cp ~/.ssh/id_rsa.pub .
+cp ~/.ssh/authorized_keys .
+cp ~/.ssh/known_hosts .
 
 # Build Docker Image && Create Contrainer from Image
 docker build -t="pls331/centos:distributed" .

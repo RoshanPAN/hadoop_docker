@@ -27,10 +27,10 @@ RUN yum update -y libselinux
 # to each other in this way 
 # RUN cp /root/.ssh/id_rsa.pub /root/.ssh/authorized_keys
 # Use the host machine's ssh for container (so that all of them can communicate)
-ADD ~/.ssh/authorized_keys /root/.ssh/authorized_keys
-ADD ~/.ssh/id_rsa /root/.ssh/id_rsa
-ADD ~/.ssh/id_rsa.pub /root/.ssh/id_rsa.pub
-ADD ~/.ssh/known_hosts /root/.ssh/known_hosts
+ADD id_rsa   /root/.ssh/id_rsa
+ADD id_rsa.pub   /root/.ssh/id_rsa.pub
+ADD authorized_keys  /root/.ssh/authorized_keys
+ADD known_hosts   /root/.ssh/known_hosts
 
 ###
 # java
