@@ -75,6 +75,8 @@ ADD slaves $HADOOP_PREFIX/etc/hadoop/slaves
 ADD mapred-site.xml $HADOOP_PREFIX/etc/hadoop/mapred-site.xml
 ADD yarn-site.xml $HADOOP_PREFIX/etc/hadoop/yarn-site.xml
 
+ADD my-start-cluster-from-master.sh $HADOOP_PREFIX/etc/hadoop/
+
 
 RUN $HADOOP_PREFIX/bin/hdfs namenode -format
 ###
