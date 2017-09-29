@@ -24,9 +24,12 @@ mkdir -p $HADOOP_PREFIX/tmp/dfs/name
 $HADOOP_PREFIX/bin/hdfs namenode -format
 
 service sshd start
-$HADOOP_PREFIX/sbin/start-dfs.sh
-$HADOOP_PREFIX/sbin/start-yarn.sh
-$HADOOP_PREFIX/sbin/mr-jobhistory-daemon.sh start historyserver
+
+# Better to start HDFS manually, since it's not on the same machine any more.
+# use my-start-cluster-from-master.sh on master
+# $HADOOP_PREFIX/sbin/start-dfs.sh
+# $HADOOP_PREFIX/sbin/start-yarn.sh
+# $HADOOP_PREFIX/sbin/mr-jobhistory-daemon.sh start historyserver
 
 
 if [[ $1 == "-d" ]]; then

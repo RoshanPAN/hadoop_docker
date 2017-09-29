@@ -120,7 +120,6 @@ RUN echo "Port 2122" >> /etc/ssh/sshd_config
 RUN service sshd start && $HADOOP_PREFIX/etc/hadoop/hadoop-env.sh && $HADOOP_PREFIX/sbin/start-dfs.sh && $HADOOP_PREFIX/bin/hdfs dfs -mkdir -p /user/root
 RUN service sshd start && $HADOOP_PREFIX/etc/hadoop/hadoop-env.sh && $HADOOP_PREFIX/sbin/start-dfs.sh && $HADOOP_PREFIX/bin/hdfs dfs -put $HADOOP_PREFIX/etc/hadoop/ input
 
-
 ###
 # modify the /etc/hosts file for ip hostname mapping
 # echo "164.107.119.20      machine01" >> /etc/hosts
@@ -129,7 +128,6 @@ RUN service sshd start && $HADOOP_PREFIX/etc/hadoop/hadoop-env.sh && $HADOOP_PRE
 # RUN echo "164.107.119.20      machine01" >> /etc/hosts
 # RUN echo "164.107.119.21      machine02" >> /etc/hosts
 # RUN echo "164.107.119.22      machine03" >> /etc/hosts
-
 
 # HDFS Web UIs
 # Namenode, dfs.http.address

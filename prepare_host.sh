@@ -31,14 +31,25 @@ ufw allow 50100
 # ssh
 ufw allow 2122
 
+# confirm the permission of folders for ssh
+chmod go-w ~/
+chmod 700 ~/.ssh
+chmod 600 ~/.ssh/authorized_keys
+# confirm the ownership of folders for ssh
+chown pls331pci ~/
+chown pls331pci ~/.ssh
+
+
 # Copy ssh keys into the context of the build
-cp ~/.ssh/id_rsa .
-cp ~/.ssh/id_rsa.pub .
-cp ~/.ssh/authorized_keys .
-cp ~/.ssh/known_hosts .
+cp ~/.ssh/id_rsa . && \
+  cp ~/.ssh/id_rsa.pub . && \
+  cp ~/.ssh/authorized_keys . && \
+  cp ~/.ssh/known_hosts . && \
+  echo ">>> ssh keys copied to the building context"
+
 
 # Build Docker Image && Create Contrainer from Image
-docker build -t="pls331/centos:distributed" .
+docker build -t="pls331/centos:distributed" . && \
 docker run -it --net=host \
   -p 50070:50070 -p 50075:50075 -p 50090:50090 -p 50105:50105 \
   -p 50030:50030 -p 50060:50060 -p 8020:8020 -p 50010:50010 \
