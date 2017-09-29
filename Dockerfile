@@ -147,6 +147,8 @@ EXPOSE 50105
 EXPOSE 50030
 # Tasktrackers, mapred.task.tracker.http.address
 EXPOSE 50060
+# Job tracker
+EXPOSE 8088
 
 # HDFS Daemons
 # Namenode	fs.defaultFS.	IPC: ClientProtocol	 Filesystem metadata operations

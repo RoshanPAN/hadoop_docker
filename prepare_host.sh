@@ -17,6 +17,9 @@ ufw allow 50105
 ufw allow 50030
 # Tasktrackers, mapred.task.tracker.http.address
 ufw allow 50060
+# Job tracker
+ufw allow 8088
+
 
 # HDFS Daemons
 # Namenode	fs.defaultFS.	IPC: ClientProtocol	 Filesystem metadata operations
@@ -27,6 +30,7 @@ ufw allow 50010
 ufw allow 50020
 # Backupnode dfs.backup.address	Same as namenode	HDFS Metadata Operations 
 ufw allow 50100
+
 
 # ssh
 ufw allow 2122
@@ -54,5 +58,6 @@ docker run -it --net=host \
   -p 50070:50070 -p 50075:50075 -p 50090:50090 -p 50105:50105 \
   -p 50030:50030 -p 50060:50060 -p 8020:8020 -p 50010:50010 \
   -p 50020:50020 -p 50100:50100 \
+  -p 8088:8088 \
   -p 2122:2122 \
   pls331/centos:distributed /etc/bootstrap.sh -bash
