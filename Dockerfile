@@ -76,7 +76,7 @@ ADD mapred-site.xml $HADOOP_PREFIX/etc/hadoop/mapred-site.xml
 ADD yarn-site.xml $HADOOP_PREFIX/etc/hadoop/yarn-site.xml
 
 ADD my-start-cluster-from-master.sh $HADOOP_PREFIX/
-RUN chmod 700 $HADOOP_PREFIX/ my-start-cluster-from-master.sh
+RUN chmod 700 $HADOOP_PREFIX/my-start-cluster-from-master.sh
 
 
 RUN $HADOOP_PREFIX/bin/hdfs namenode -format
