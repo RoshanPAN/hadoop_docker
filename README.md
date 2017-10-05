@@ -1,9 +1,9 @@
 # hadoop_docker
 Project to create HDFS distributed cluster with docker images.
 
-# How to use this Dockerfile
+# How to use this Docker file
 
-### Open allow the ports used in ufw
+### Setup, Build and Run
 - set up login without password in host machine to allow login with `ssh [host_IP]` between all pair of machines.
 > A easier way to do this is to use same public/private key, authorized_keys files among all machines. The later on script will copy your hostmachine's ssh related files into their `/root/.ssh/`
 - run `prepare_host.sh` in the host machine.
