@@ -124,6 +124,7 @@ RUN service sshd start
 # RUN $HADOOP_PREFIX/etc/hadoop/hadoop-env.sh && $HADOOP_PREFIX/sbin/start-dfs.sh && $HADOOP_PREFIX/bin/hdfs dfs -mkdir -p /user/root
 # RUN service sshd start && $HADOOP_PREFIX/etc/hadoop/hadoop-env.sh && $HADOOP_PREFIX/sbin/start-dfs.sh && $HADOOP_PREFIX/bin/hdfs dfs -put $HADOOP_PREFIX/etc/hadoop/ input
 
+WORKDIR /usr/local/hadoop
 ###
 # modify the /etc/hosts file for ip hostname mapping
 # echo "164.107.119.20      machine01" >> /etc/hosts
