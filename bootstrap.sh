@@ -27,7 +27,7 @@ service sshd start
 
 # Better to start HDFS manually, since it's not on the same machine any more.
 # use my-start-cluster-from-master.sh on master
-$HADOOP_PREFIX/sbin/my-start-cluster-from-master.sh
+$HADOOP_PREFIX/my-start-cluster-from-master.sh
 
 
 if [[ $1 == "-d" ]]; then
