@@ -33,14 +33,14 @@ ADD authorized_keys  /root/.ssh/authorized_keys
 ADD known_hosts   /root/.ssh/known_hosts
 
 ###
-# java
-RUN curl -LO 'http://download.oracle.com/otn-pub/java/jdk/8u144-b01/090f390dda5b47b9b721c7dfaa008135/jdk-8u144-linux-x64.rpm' -H 'Cookie: oraclelicense=accept-securebackup-cookie'
-RUN rpm -i jdk-8u144-linux-x64.rpm
-RUN rm jdk-8u144-linux-x64.rpm
+# java 1.8
+RUN curl -LO 'http://download.oracle.com/otn-pub/java/jdk/8u151-b12/e758a0de34e24606bca991d704f6dcbf/jdk-8u151-linux-x64.rpm' -H 'Cookie: oraclelicense=accept-securebackup-cookie'
+RUN rpm -i jdk-8u151-linux-x64.rpm
+RUN rm jdk-8u151-linux-x64.rpm
 
 ENV JAVA_HOME /usr/java/default
 ENV PATH $PATH:$JAVA_HOME/bin
-# default -> /usr/java/latest， latest -> /usr/java/jdk1.7.0_71
+# default -> /usr/java/latest， latest -> /usr/java/jdk1.8u151
 RUN rm /usr/bin/java && ln -s $JAVA_HOME/bin/java /usr/bin/java 
 
 ###
