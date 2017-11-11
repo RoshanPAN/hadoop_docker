@@ -60,4 +60,5 @@ docker run -it --net=host \
   -p 50020:50020 -p 50100:50100 \
   -p 8088:8088 \
   -p 2122:2122 \
+  --name hdfs \
   pls331/centos:distributed /etc/bootstrap.sh -bash
